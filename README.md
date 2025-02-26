@@ -1,110 +1,75 @@
-# Aiven Commands for Laravel
+📚 Website Bán Sách Trực Tuyến - Bookworm
 
-**✨ Add some Aiven magic to your Laravel project ✨**
+📝 Giới thiệu
 
-This Laravel package provides some `aiven` commands for `artisan` to help with managing your development databases and producing the correct configuration to use with them. This version supports both MySQL and PostgreSQL.
+Tuy mới phát triển mạnh mẽ khoảng 10 năm qua, thương mại điện tử đã khẳng định được vị thế và trở thành xu hướng tất yếu của nền kinh tế hiện đại. Nhu cầu tìm kiếm và mua sắm trực tuyến ngày càng tăng, đặc biệt trong tình hình dịch bệnh phức tạp vừa qua.
 
-Use the commands to:
-* List the Aiven services in your project
-* Power your databases on and off from `artisan`, so you don't leave the meter running when you're not working
-* Get database config you can paste straight into your `.env` file or environment.
+Website Bookworm ra đời nhằm phục vụ nhu cầu mua bán, tìm kiếm và lựa chọn các loại sách một cách thuận tiện. Trang web cung cấp chức năng quản lý cho người bán và thông tin chi tiết cho khách hàng, giúp đặt mua sách nhanh chóng, tiện lợi, đồng thời hỗ trợ người bán quản lý sản phẩm, đơn hàng và khách hàng.
 
-## Getting started
+🚀 Giải quyết vấn đề
 
-Install the package with [Composer](https://getcomposer.org):
+Hiện nay, các website thương mại điện tử như Fahasa và Nhà Sách Phương Nam phát triển rất mạnh mẽ. Tuy nhiên, nhiều cửa hàng sách vừa và nhỏ trong nước chưa có hệ thống website phù hợp để quảng bá và mở rộng kinh doanh. Bookworm mang đến giải pháp cơ bản, dễ sử dụng, phù hợp với nhu cầu kinh doanh sách quy mô nhỏ.
 
-```
-composer require aiven/aiven-laravel
-```
+🎯 Mục tiêu đề tài
 
-You will need an Aiven account - [sign up for a free trial](https://console.aiven.io/signup?utm_source=github&utm_medium=aiven-laravel) if you don't have one already. Go ahead and create the database(s) you'll be using in your project through the web interface, or investigate the [Aiven CLI](https://developer.aiven.io/docs/tools/cli).
+Xây dựng hệ thống website kinh doanh sách quy mô nhỏ với đầy đủ chức năng:
 
-Get an [auth token](https://developer.aiven.io/docs/platform/howto/create_authentication_token) for your Aiven account, and set it as `AIVEN_API_TOKEN` in your environment.
+Quản lý thông tin sản phẩm
 
-It's recommended to also set `AIVEN_DEFAULT_PROJECT` as the project in your Aiven account that you'll be using services from (but you can also supply `--project [projectname]` for all the commands instead if you like)
+Quản lý thành viên
 
-## Usage
+Quản lý đơn hàng
 
-Get a list of the Aiven services (databases) available:
+Tìm kiếm và mua bán sách
 
-```
-php artisan aiven:list 
-```
+Quảng bá các loại sách
 
-Get the environment variables to export or paste into `.env` for a particular service:
+👥 Đối tượng và phạm vi nghiên cứu
 
-```
-php artisan aiven:getconfig --service my-postgres-db
-```
+🧑‍💼 Đối tượng nghiên cứu
 
-> When you use the `DATABASE_URL` in Laravel, you must remove the existing `DB_HOST`, `DB_PORT`, etc configuration so that it does not conflict.
+Nhà sách Bookworm
 
-Check the status of the service:
+Người có nhu cầu mua sách trực tuyến
 
-```
-php artisan aiven:state --service my-postgres-db
-```
+🌍 Phạm vi nghiên cứu
 
-Power the service on or off:
-```
-php artisan aiven:powerup --service my-postgres-db
-php artisan aiven:powerdown --service my-postgres-db
-```
+Phát triển hệ thống cho một cửa hàng bán sách
 
-It's useful to power things down when you're not using them so that you aren't being charged (even if you're still paying in trial credits!)
+Đáp ứng nghiệp vụ kinh doanh và mang lại trải nghiệm mua hàng thuận tiện cho khách hàng
 
-## Datastore-specific setup
+🧪 Phương pháp nghiên cứu
 
-### MySQL and PostgreSQL®
+📐 Về lý thuyết:
 
-PHP is on good terms with relational databases, and Laravel makes this very straight forward.
+Mô hình kiến trúc Client - Server
 
-1. Remove all the configuration entries from `.env` starting with `DB_`
+💻 Về lập trình:
 
-2. Paste the output of the `aiven:getconfig` command. For both MySQL and PostgreSQL, this is a `DATABASE_URL`. For PostgreSQL, we need to tell Laravel we want to use Postgres (MySQL is the default) so the command also outputs `DB_CONNECTION=pgsql` and this should also be included.
+Front-end: HTML, CSS, Bootstrap, jQuery
 
-### Redis™*
+Back-end: PHP (mô hình MVC)
 
-Redis™ needs some extra dependencies (see [Laravel Redis docs](https://laravel.com/docs/8.x/redis)), and then you can set the `REDIS_URL` to the value returned by `aiven:getconfig`.
+Database: MySQL
 
-### OpenSearch® with Laravel Scout
+🧩 Nội dung nghiên cứu
 
-This uses some Elasticsearch libraries because the OpenSearch project is a fork so they are reasonably compatible.
+1️⃣ Phân tích yêu cầu
 
-* Use [Laravel Scout](https://laravel.com/docs/8.x/scout)
+Khảo sát thực tế mua bán sách tại các nhà sách
 
-* Add [Explorer](https://jeroen-g.github.io/Explorer/)
+Xác định nhu cầu người mua và người quản lý
 
-* Pin your PHP elasticsearch library dependencies, I have this in `composer.json`:
+Đặc tả yêu cầu hệ thống
 
-```
-        "elasticsearch/elasticsearch": ">=7.9 <7.14",
-```
+2️⃣ Thiết kế hệ thống
 
-The `aiven:getconfig` command will give you just the connection string for an OpenSearch service; put this in the `config/explorer.php` so that it looks something like this:
+Mô tả tổng quan và yêu cầu chức năng
 
-```
-    'connection' => "https://avnadmin:s3cr3t@servicename.aivencloud.com:port",
-```
+Thiết kế cơ sở dữ liệu và giao diện
 
-The Scout documentation has a good overview of how to make your models searchable, and the Explorer project adds commands to create the index.
+3️⃣ Cài đặt
 
-## Troubleshooting
+Xây dựng hệ thống sử dụng PHP (MVC), CSS, Bootstrap, jQuery
 
-### MySQL primary key errors
-
-Laravel's initial migrations assumes that your MySQL database doesn't enforce primary keys (see [related bug](https://github.com/laravel/framework/issues/33238) for more info) - disable the `mysql.sql_require_primary_key` setting on Aiven if you run into this.
-
-### Connection problems
-
-If you add the config to your environment and still can't connect, check that you don't have other environment variables with names starting `DB_` ... values like `DB_HOST` should be removed when you use the `DATABASE_URL` field to connect.
-
-## Get in touch
-
-Questions? Problems? Open an issue and let us know.
-
-## Trademarks
-MySQL, OpenSearch, PostgreSQL and Laravel are trademarks and property of their respective owners. All product and service names used in this website are for identification purposes only and do not imply endorsement.
-
-/* Redis is a trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Aiven Oy is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Aiven Oy.
-
+Sử dụng MySQL cho quản lý cơ sở dữ liệu
